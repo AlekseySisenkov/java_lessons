@@ -13,3 +13,8 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 java_lessons/.idea/workspace.xml
+Sandbox/out/production/classes/ru/stqa/lessons/sandbox/MyFirstProgram.class
+Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Rectangle.class
+Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Square.class
+Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Point.class
+Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Auto_point.class
