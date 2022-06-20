@@ -6,6 +6,8 @@ import ru.stqa.lessons.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase{
 
+  public String a;
+
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
@@ -29,5 +31,26 @@ public class ContactHelper extends HelperBase{
 
   public void addnewContact() {
     click(By.linkText("add new"));
+  }
+
+  public void selecteContact(int a) {
+    click(By.id(String.valueOf(a)));
+
+  }
+
+  public void deleteSelectedContact() {
+    click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void allert() {
+    wd.switchTo().alert().accept();
+  }
+
+  public void editContact() {
+    click(By.xpath("//img[@alt='Edit']"));
+  }
+
+  public void updateContact() {
+    click(By.xpath("//div[@id='content']/form/input[22]"));
   }
 }
