@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
+  private ContactHelper contactHelper;
   private NavigationHelper navigationHelper;
   private GroupsHelper groupsHelper;
   private SessionHelper sessionHelper;
@@ -19,12 +20,13 @@ public class ApplicationManager {
     wd.get("http://localhost/addressbook/");
     groupsHelper = new GroupsHelper(wd);
     navigationHelper = new NavigationHelper(wd);
+    contactHelper = new ContactHelper(wd);
     sessionHelper = new SessionHelper(wd);
     sessionHelper.login("admin", "secret");
   }
 
   public void stop() {
-    wd.quit();
+    contactHelper.wd.quit();
   }
 
   public GroupsHelper getGroupsHelper() {
@@ -33,5 +35,9 @@ public class ApplicationManager {
 
   public NavigationHelper getNavigationHelper() {
     return navigationHelper;
+  }
+
+  public ContactHelper getContactHelper() {
+    return contactHelper;
   }
 }
