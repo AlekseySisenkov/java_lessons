@@ -2,3 +2,13 @@ apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = "ru.stqa.lessons.sandbox.MyFirstProgram"
 mainClassName = "ru.stqa.lessons.sandbox.Auto_point"
+
+repositories {
+
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.testng:testng:7.5'
+}
