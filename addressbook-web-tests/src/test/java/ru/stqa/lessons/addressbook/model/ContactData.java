@@ -7,14 +7,16 @@ public class ContactData {
   private final String nickn;
   private final String mail;
   private final String homep;
+  private String group;
 
-  public ContactData(String fistn, String middlen, String lastn, String nickn, String mail, String homep) {
+  public ContactData(String fistn, String middlen, String lastn, String nickn, String mail, String homep, String group) {
     this.fistn = fistn;
     this.middlen = middlen;
     this.lastn = lastn;
     this.nickn = nickn;
     this.mail = mail;
     this.homep = homep;
+    this.group = group;
   }
 
   public String getFistn() {
@@ -39,5 +41,9 @@ public class ContactData {
 
   public String getHomep() {
     return homep;
+  }
+
+  public String getGroup() {
+    return group;
   }
 }
