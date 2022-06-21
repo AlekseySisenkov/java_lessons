@@ -19,9 +19,4 @@ Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Square.class
 Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Point.class
 Sandbox/out/production/classes/ru/stqa/lessons/sandbox/Auto_point.class
 *.class
-addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/GroupsHelper.class
-addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/ApplicationManager.class
-addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/ContactCreationTests.class
-addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/HelperBase.class
-addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/GroupCreationTests.class
 
