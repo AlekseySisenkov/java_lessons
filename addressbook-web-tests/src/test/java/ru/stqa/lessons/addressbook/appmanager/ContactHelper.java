@@ -8,7 +8,7 @@ import ru.stqa.lessons.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase{
 
-  public String a;
+  //public String a;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -56,5 +56,15 @@ public class ContactHelper extends HelperBase{
 
   public void updateContact() {
     click(By.xpath("//div[@id='content']/form/input[22]"));
+  }
+
+  public boolean isThereContact() {
+    return isElementPresent(By.name("selected[]"));
+  }
+
+  public void createContact(ContactData contact, boolean creation) {
+    addnewContact();
+    fillContactForm(contact, creation);
+    submitContactCreation();
   }
 }
