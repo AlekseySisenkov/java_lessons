@@ -29,3 +29,5 @@ addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/Ap
 addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/ApplicationManager.class
 addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/ContactCreationTests.class
 addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/GroupsHelper.class
+addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/appmanager/ApplicationManager.class
+addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/TestBase.class
