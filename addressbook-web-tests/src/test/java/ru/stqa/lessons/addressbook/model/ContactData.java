@@ -9,7 +9,8 @@ public class ContactData {
   private final String homep;
   private String group;
 
-  public ContactData(String fistn, String middlen, String lastn, String nickn, String mail, String homep, String group) {
+  public ContactData(String fistn, String middlen, String lastn, String nickn,
+                     String mail, String homep, String group) {
     this.fistn = fistn;
     this.middlen = middlen;
     this.lastn = lastn;

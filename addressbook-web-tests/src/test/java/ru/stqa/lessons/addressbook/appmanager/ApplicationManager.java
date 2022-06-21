@@ -39,7 +39,7 @@ public class ApplicationManager {
   }
 
   public void stop() {
-    contactHelper.wd.quit();
+    wd.quit();
   }
 
   public GroupsHelper getGroupsHelper() {
