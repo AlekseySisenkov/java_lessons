@@ -34,3 +34,4 @@ addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/Contact
 addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/GroupDeletionTests.class
 addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/GroupModificationTests.class
 addressbook-web-tests/out/test/classes/ru/stqa/lessons/addressbook/tests/ContactDeletionTests.class
+Sandbox/out/test/classes/ru/stqa/lessons/sandbox/Point_tests.class

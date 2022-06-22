@@ -3,7 +3,7 @@ package ru.stqa.lessons.sandbox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Point_tests {
+public class PoinTests {
 
 
   @Test
@@ -20,7 +20,7 @@ public class Point_tests {
 
     Point p3 = new Point(-1, 4);
     Point p4 = new Point(-4, 9);
-    Assert.assertEquals(p3.distance(p4), -5.830951894845301);
+    Assert.assertEquals(p3.distance(p4), 5.830951894845301);
   }
 
   @Test
