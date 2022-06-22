@@ -11,7 +11,7 @@ public class ContactDeletionTests extends TestBase {
     if (! app.getContactHelper().isThereContact()){
       app.getContactHelper().createContact(new ContactData("sdg", "sdg",
               "Tesdgst3", "Alesdgksey", "example@test.sdg", "+s32525",
-              "test1"), true);
+              "test1"));
     }
     app.getContactHelper().selecteContact();
    //app.getContactHelper().selecteContact(before-1);

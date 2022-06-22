@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.lessons.addressbook.model.GroupData;
 
-public class GroupsHelper extends HelperBase{
+public class GroupsHelper extends HelperBase {
 
   public GroupsHelper(WebDriver wd) {
     super(wd);
@@ -56,6 +56,6 @@ public class GroupsHelper extends HelperBase{
   }
 
   public int getGroupCount() {
-   return wd.findElements(By.name("selected[]")).size();
+    return wd.findElements(By.name("selected[]")).size();
   }
 }

@@ -7,17 +7,12 @@ import org.testng.Assert;
 import ru.stqa.lessons.addressbook.model.ContactData;
 
 public class ContactHelper extends HelperBase{
-
-  //public String a;
-
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
-
   public void submitContactCreation() {
-    click(By.xpath("//div[@id='content']/form/input[21]"));
+    click(By.xpath("//input[21]"));
   }
-
   public void fillContactForm(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getFistn());
     type(By.name("middlename"), contactData.getMiddlen());
@@ -26,13 +21,37 @@ public class ContactHelper extends HelperBase{
     type(By.name("address"), contactData.getMail());
     type(By.name("home"), contactData.getHomep());
 
-    if(creation){
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    } else {
+    if(creation) {
+       if (!isElementPresent(By.id(contactData.getGroup()))) createContactBeforeGroup(contactData);
+        else if(contactData.getGroup() == null)
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+          else new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    }
+    else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
 
+    public void createContactBeforeGroup(ContactData contactData) {
+      createGroupForContact(contactData);
+      addnewContact();
+      type(By.name("firstname"), contactData.getFistn());
+      type(By.name("middlename"), contactData.getMiddlen());
+      type(By.name("lastname"), contactData.getLastn());
+      type(By.name("nickname"), contactData.getNickn());
+      type(By.name("address"), contactData.getMail());
+      type(By.name("home"), contactData.getHomep());
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    }
+
+   public void createGroupForContact(ContactData contactData){
+     wd.findElement(By.linkText("groups")).click();
+     wd.findElement(By.name("new")).click();
+     wd.findElement(By.name("group_name")).click();
+     wd.findElement(By.name("group_name")).clear();
+     wd.findElement(By.name("group_name")).sendKeys(contactData.getGroup());
+     wd.findElement(By.name("submit")).click();
+   }
   public void addnewContact() {
     click(By.linkText("add new"));
   }
@@ -64,9 +83,9 @@ public class ContactHelper extends HelperBase{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public void createContact(ContactData contact, boolean creation) {
+  public void createContact(ContactData contact) {
     addnewContact();
-    fillContactForm(contact, creation);
+    fillContactForm(contact, true);
     submitContactCreation();
   }
 
