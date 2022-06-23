@@ -13,8 +13,8 @@ public class ContactDeletionTests extends TestBase {
               "Tesdgst3", "Alesdgksey", "example@test.sdg", "+s32525",
               "test1"));
     }
-    app.getContactHelper().selecteContact();
-   //app.getContactHelper().selecteContact(before-1);
+    //app.getContactHelper().selecteContact();
+   app.getContactHelper().selecteContact(before-1);
    app.getContactHelper().deleteSelectedContact();
    app.getContactHelper().allert();
    app.getNavigationHelper().gotoHomePage();
