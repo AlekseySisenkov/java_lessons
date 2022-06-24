@@ -26,8 +26,7 @@ public class ContactHelper extends HelperBase{
     type(By.name("home"), contactData.getHomep());
 
     if(creation) {
-       if (!isElementPresent(By.id(contactData.getGroup()))) createContactBeforeGroup(contactData);
-        else if(contactData.getGroup() == null)
+      if(contactData.getGroup() == null)
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
           else new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     }
@@ -35,19 +34,6 @@ public class ContactHelper extends HelperBase{
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
-
-    public void createContactBeforeGroup(ContactData contactData) {
-      createGroupForContact(contactData);
-      addnewContact();
-      type(By.name("firstname"), contactData.getFistn());
-      type(By.name("middlename"), contactData.getMiddlen());
-      type(By.name("lastname"), contactData.getLastn());
-      type(By.name("nickname"), contactData.getNickn());
-      type(By.name("address"), contactData.getMail());
-      type(By.name("home"), contactData.getHomep());
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    }
-
    public void createGroupForContact(ContactData contactData){
      wd.findElement(By.linkText("groups")).click();
      wd.findElement(By.name("new")).click();
@@ -89,8 +75,15 @@ public class ContactHelper extends HelperBase{
 
   public void createContact(ContactData contact) {
     addnewContact();
-    fillContactForm(contact, true);
-    submitContactCreation();
+    if (contact.getGroup() != null) {
+      if (!isElementPresent(By.id(contact.getGroup()))) {
+        createGroupForContact(contact);
+        addnewContact();
+      }
+    }
+      fillContactForm(contact, true);
+      submitContactCreation();
+
   }
 
   public int getContactCount() {

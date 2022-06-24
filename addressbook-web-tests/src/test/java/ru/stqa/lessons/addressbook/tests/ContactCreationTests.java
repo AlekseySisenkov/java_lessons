@@ -13,7 +13,7 @@ public class ContactCreationTests extends TestBase{
     List<ContactData> before = app.getContactHelper().getContactList();
     ContactData contact = new ContactData("Test1", "Test2",
             "Test3", "Aleksey", "example@test.ru", "+71231451617",
-            "hjqa");
+            null);
     app.getContactHelper().createContact(contact);
     app.getNavigationHelper().gotoHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
