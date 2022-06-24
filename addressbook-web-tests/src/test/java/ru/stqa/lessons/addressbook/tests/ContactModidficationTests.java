@@ -22,7 +22,7 @@ public class ContactModidficationTests extends TestBase{
             "+34636436", "test1");
     app.getContactHelper().fillContactForm(contact, false);
     app.getContactHelper().updateContact();
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().gotoHomePage();
     List<ContactData> after = app.getContactHelper().getContactList();
 
 
