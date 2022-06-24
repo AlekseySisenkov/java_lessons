@@ -7,6 +7,8 @@ import ru.stqa.lessons.addressbook.model.ContactData;
 import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
+
+
   @Test
   public void testContactDeletion(){
     if (! app.getContactHelper().isThereContact()){
