@@ -1,28 +1,25 @@
 package ru.stqa.lessons.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.lessons.addressbook.model.ContactData;
+import ru.stqa.lessons.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase{
   @Test
   public void testContactCreation() throws Exception {
-    List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData("Test1", "Test2",
-            "Test3", "Aleksey", "example@test.ru", "+71231451617",
-            null);
-    app.getContactHelper().createContact(contact);
-    app.goTo().gotoHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData()
+            .withFistn("Test1").withMiddlen("Test2").withLastn("Test3").withNickn("Aleksey").withMail("example@test.ru").withHomep("+71231451617");
+    app.contact().create(contact);
+    app.goTo().homePage();
+    Contacts after = app.contact().all();
 
-    before.add(contact);
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
-
-    Assert.assertEquals(before,after);
+    assertEquals(after.size(),before.size()+1);
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
 }

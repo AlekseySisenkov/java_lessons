@@ -3,39 +3,14 @@ package ru.stqa.lessons.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String fistn;
-  private final String middlen;
-  private final String lastn;
-  private final String nickn;
-  private final String mail;
-  private final String homep;
+  private int id = Integer.MAX_VALUE;
+  private String fistn;
+  private String middlen;
+  private String lastn;
+  private String nickn;
+  private String mail;
+  private String homep;
   private String group;
-
-  public ContactData(String fistn, String middlen, String lastn, String nickn,
-                     String mail, String homep, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.fistn = fistn;
-    this.middlen = middlen;
-    this.lastn = lastn;
-    this.nickn = nickn;
-    this.mail = mail;
-    this.homep = homep;
-    this.group = group;
-  }
-
-  public ContactData(int id, String fistn, String middlen, String lastn, String nickn,
-                     String mail, String homep, String group) {
-    this.id = id;
-    this.fistn = fistn;
-    this.middlen = middlen;
-    this.lastn = lastn;
-    this.nickn = nickn;
-    this.mail = mail;
-    this.homep = homep;
-    this.group = group;
-  }
-
   public String getFistn() {
     return fistn;
   }
@@ -68,17 +43,57 @@ public class ContactData {
     return id;
   }
 
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
+
+  public ContactData withFistn(String fistn) {
+    this.fistn = fistn;
+    return this;
+  }
+
+  public ContactData withMiddlen(String middlen) {
+    this.middlen = middlen;
+    return this;
+  }
+
+  public ContactData withLastn(String lastn) {
+    this.lastn = lastn;
+    return this;
+  }
+
+  public ContactData withNickn(String nickn) {
+    this.nickn = nickn;
+    return this;
+  }
+
+  public ContactData withMail(String mail) {
+    this.mail = mail;
+    return this;
+  }
+
+  public ContactData withHomep(String homep) {
+    this.homep = homep;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return Objects.equals(fistn, that.fistn) && Objects.equals(lastn, that.lastn);
+    return id == that.id && Objects.equals(fistn, that.fistn) && Objects.equals(lastn, that.lastn);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(fistn, lastn);
+    return Objects.hash(id, fistn, lastn);
   }
 
   @Override
