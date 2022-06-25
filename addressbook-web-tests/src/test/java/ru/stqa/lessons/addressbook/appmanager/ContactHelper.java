@@ -22,8 +22,6 @@ public class ContactHelper extends HelperBase{
     type(By.name("middlename"), contactData.getMiddlen());
     type(By.name("lastname"), contactData.getLastn());
     type(By.name("nickname"), contactData.getNickn());
-    type(By.name("address"), contactData.getMail());
-    type(By.name("home"), contactData.getHomep());
 
     if(creation) {
       if(contactData.getGroup() == null)
@@ -72,38 +70,46 @@ public class ContactHelper extends HelperBase{
     }
       fillContactForm(contact, true);
       submitContactCreation();
-
+      contactCache = null;
   }
 
   public void modify(ContactData contact) {
     editContactById(contact.getId());
     fillContactForm(contact, false);
     updateContact();
+    contactCache = null;
   }
 
   public void delete(ContactData contact) {
     selecteContactById(contact.getId());
     deleteSelectedContact();
     allert();
+    contactCache = null;
   }
 
   public boolean isThereContact() {
     return isElementPresent(By.name("selected[]"));
   }
-  public int getContactCount() { return wd.findElements(By.name("selected[]")).size(); }
+  public int count() { return wd.findElements(By.name("selected[]")).size(); }
 
+  private Contacts contactCache = null;
   public Contacts all() {
-    Contacts contacts = new Contacts();
+    if(contactCache != null){
+      return new Contacts(contactCache);
+    }
+    contactCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name ='entry']"));
     for(WebElement element: elements){
       String fistn = element.findElement(By.cssSelector("#maintable td:nth-child(3)")).getText();
       String lastn = element.findElement(By.cssSelector("#maintable td:nth-child(2)")).getText();
-      String[] phones = element.findElement(By.cssSelector("#maintable td:nth-child(6)")).getText().split("\n");
+      String allPhones = element.findElement(By.cssSelector("#maintable td:nth-child(6)")).getText();
+      String address = element.findElement(By.cssSelector("#maintable td:nth-child(4)")).getText();
+      String allEMail = element.findElement(By.cssSelector("#maintable td:nth-child(5)")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-      contacts.add(new ContactData().withId(id).withFistn(fistn).withLastn(lastn)
-              .withHomep(phones[0]).withMobilep(phones[1]).withWorkp(phones[2]));
+      contactCache.add(new ContactData().withId(id).withFistn(fistn).withLastn(lastn)
+              .withAllPhones(allPhones).withAddress(address).withAllEMail(allEMail));
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 
   public ContactData infoFromEditFom(ContactData contact) {
@@ -113,8 +119,13 @@ public class ContactHelper extends HelperBase{
     String homep = wd.findElement(By.name("home")).getAttribute("value");
     String mobilep = wd.findElement(By.name("mobile")).getAttribute("value");
     String workp = wd.findElement(By.name("work")).getAttribute("value");
+    String address = wd.findElement(By.name("address")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     wd.navigate().back();
     return new ContactData().withId(contact.getId())
-            .withFistn(fistn).withLastn(lastn).withHomep(homep).withMobilep(mobilep).withWorkp(workp);
+            .withFistn(fistn).withLastn(lastn).withHomep(homep).withMobilep(mobilep).withWorkp(workp).withAddress(address)
+            .withEmail(email).withEmail2(email2).withEmail3(email3);
   }
 }
