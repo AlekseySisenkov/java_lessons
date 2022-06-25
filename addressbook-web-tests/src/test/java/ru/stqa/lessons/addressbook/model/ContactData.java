@@ -1,5 +1,6 @@
 package ru.stqa.lessons.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class ContactData {
@@ -9,23 +10,18 @@ public class ContactData {
   private String lastn;
   private String nickn;
   private String homep;
-
   private String mobilep;
-
   private String workp;
-
   private String allPhones;
-
   private String address;
-
   private String email;
-
   private String email2;
-
   private String email3;
-
   private String allEMail;
   private String group;
+  private File photo;
+
+  public File getPhoto() { return photo; }
   public String getFistn() {
     return fistn;
   }
@@ -139,6 +135,10 @@ public class ContactData {
     return this;
   }
 
+  public ContactData withPhoto(File photo) {
+    this.photo = photo;
+    return this;
+  }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
