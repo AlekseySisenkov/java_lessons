@@ -6,9 +6,9 @@
     <mobilep>00-00</mobilep>
     <workp>0 000</workp>
     <address>ul. Tipanova, d. 5, kv. 0</address>
-    <email>test0@test.ts</email>
-    <email2>test0@test.ts</email2>
-    <email3>test0@test.ts</email3>
+    <email>test01@test.ts</email>
+    <email2>test02@test.ts</email2>
+    <email3>test03@test.ts</email3>
   </Contact>
   <Contact>
     <fistn>name 1</fistn>
@@ -17,9 +17,9 @@
     <mobilep>11-11</mobilep>
     <workp>1 111</workp>
     <address>ul. Tipanova, d. 5, kv. 1</address>
-    <email>test1@test.ts</email>
-    <email2>test1@test.ts</email2>
-    <email3>test1@test.ts</email3>
+    <email>test11@test.ts</email>
+    <email2>test12@test.ts</email2>
+    <email3>test13@test.ts</email3>
   </Contact>
   <Contact>
     <fistn>name 2</fistn>
@@ -28,8 +28,8 @@
     <mobilep>22-22</mobilep>
     <workp>2 222</workp>
     <address>ul. Tipanova, d. 5, kv. 2</address>
-    <email>test2@test.ts</email>
-    <email2>test2@test.ts</email2>
-    <email3>test2@test.ts</email3>
+    <email>test21@test.ts</email>
+    <email2>test22@test.ts</email2>
+    <email3>test23@test.ts</email3>
   </Contact>
 </list>
