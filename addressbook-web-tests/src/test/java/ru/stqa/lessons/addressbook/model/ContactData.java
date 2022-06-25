@@ -176,9 +176,15 @@ public class ContactData {
   @Override
   public String toString() {
     return "ContactData{" +
-            "id=" + id +
-            ", fistn='" + fistn + '\'' +
+            "fistn='" + fistn + '\'' +
             ", lastn='" + lastn + '\'' +
+            ", homep='" + homep + '\'' +
+            ", mobilep='" + mobilep + '\'' +
+            ", workp='" + workp + '\'' +
+            ", address='" + address + '\'' +
+            ", email='" + email + '\'' +
+            ", email2='" + email2 + '\'' +
+            ", email3='" + email3 + '\'' +
             '}';
   }
 }

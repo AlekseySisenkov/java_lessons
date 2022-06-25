@@ -69,8 +69,8 @@ public class ContactDataGenerator {
       contacts.add(new ContactData().withFistn(String.format("name %s",i)).withLastn(String.format("last name %s",i))
               .withAddress(String.format("ul. Tipanova, d. 5, kv. %s",i)).withEmail(String.format("test%s1@test.ts",i))
               .withEmail2(String.format("test%s2@test.ts",i)).withEmail3(String.format("test%s3@test.ts",i))
-              .withHomep(String.format("+%s (%s%s%s)",i,i,i,i)).withMobilep(String.format("%s%s-%s%s",i,i,i,i))
-              .withWorkp(String.format("%s %s%s%s",i,i,i,i)));
+              .withHomep(String.format("+%s (123)",i)).withMobilep(String.format("32-1%s",i))
+              .withWorkp(String.format("%s 123",i)));
     }
     return contacts;
   }

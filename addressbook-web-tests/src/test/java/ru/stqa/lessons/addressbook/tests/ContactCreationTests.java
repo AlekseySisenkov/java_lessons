@@ -52,7 +52,7 @@ public class ContactCreationTests extends TestBase{
       return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
-  @Test (dataProvider = "validСontactsFromXml")
+  @Test (dataProvider = "validСontactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
     Contacts before = app.contact().all();
    /* File photo = new File("src/test/resources/Moscow.png");

@@ -2,9 +2,9 @@
   <Contact>
     <fistn>name 0</fistn>
     <lastn>last name 0</lastn>
-    <homep>+0 (000)</homep>
-    <mobilep>00-00</mobilep>
-    <workp>0 000</workp>
+    <homep>+0 (123)</homep>
+    <mobilep>32-10</mobilep>
+    <workp>0 123</workp>
     <address>ul. Tipanova, d. 5, kv. 0</address>
     <email>test01@test.ts</email>
     <email2>test02@test.ts</email2>
@@ -13,9 +13,9 @@
   <Contact>
     <fistn>name 1</fistn>
     <lastn>last name 1</lastn>
-    <homep>+1 (111)</homep>
-    <mobilep>11-11</mobilep>
-    <workp>1 111</workp>
+    <homep>+1 (123)</homep>
+    <mobilep>32-11</mobilep>
+    <workp>1 123</workp>
     <address>ul. Tipanova, d. 5, kv. 1</address>
     <email>test11@test.ts</email>
     <email2>test12@test.ts</email2>
@@ -24,9 +24,9 @@
   <Contact>
     <fistn>name 2</fistn>
     <lastn>last name 2</lastn>
-    <homep>+2 (222)</homep>
-    <mobilep>22-22</mobilep>
-    <workp>2 222</workp>
+    <homep>+2 (123)</homep>
+    <mobilep>32-12</mobilep>
+    <workp>2 123</workp>
     <address>ul. Tipanova, d. 5, kv. 2</address>
     <email>test21@test.ts</email>
     <email2>test22@test.ts</email2>

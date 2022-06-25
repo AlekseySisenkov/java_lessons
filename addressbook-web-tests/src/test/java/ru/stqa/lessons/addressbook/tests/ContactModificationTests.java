@@ -8,7 +8,7 @@ import ru.stqa.lessons.addressbook.model.Contacts;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContactModidficationTests extends TestBase{
+public class ContactModificationTests extends TestBase{
 
   @BeforeMethod
   public void ensurePreconditions() {
