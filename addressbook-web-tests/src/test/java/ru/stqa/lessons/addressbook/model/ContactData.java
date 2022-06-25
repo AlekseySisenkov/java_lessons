@@ -10,6 +10,10 @@ public class ContactData {
   private String nickn;
   private String mail;
   private String homep;
+
+  private String mobilep;
+
+  private String workp;
   private String group;
   public String getFistn() {
     return fistn;
@@ -35,6 +39,13 @@ public class ContactData {
     return homep;
   }
 
+  public String getMobilep() {
+    return mobilep;
+  }
+
+  public String getWorkp() {
+    return workp;
+  }
   public String getGroup() {
     return group;
   }
@@ -75,6 +86,16 @@ public class ContactData {
 
   public ContactData withHomep(String homep) {
     this.homep = homep;
+    return this;
+  }
+
+  public ContactData withMobilep(String mobilep) {
+    this.mobilep = mobilep;
+    return this;
+  }
+
+  public ContactData withWorkp(String workp) {
+    this.workp = workp;
     return this;
   }
 

@@ -55,7 +55,10 @@ public class ContactHelper extends HelperBase{
   public void allert() {
     wd.switchTo().alert().accept();
   }
-  public void editContactById(int id) { wd.get("http://localhost/addressbook/edit.php?id="+id); }
+  public void editContactById(int id) {
+    //wd.get("http://localhost/addressbook/edit.php?id="+id);
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s'",id))).click();
+  }
   public void updateContact() {
     click(By.xpath("//div[@id='content']/form/input[22]"));
   }
@@ -95,9 +98,23 @@ public class ContactHelper extends HelperBase{
     for(WebElement element: elements){
       String fistn = element.findElement(By.cssSelector("#maintable td:nth-child(3)")).getText();
       String lastn = element.findElement(By.cssSelector("#maintable td:nth-child(2)")).getText();
+      String[] phones = element.findElement(By.cssSelector("#maintable td:nth-child(6)")).getText().split("\n");
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-      contacts.add(new ContactData().withId(id).withFistn(fistn).withLastn(lastn));
+      contacts.add(new ContactData().withId(id).withFistn(fistn).withLastn(lastn)
+              .withHomep(phones[0]).withMobilep(phones[1]).withWorkp(phones[2]));
     }
     return contacts;
+  }
+
+  public ContactData infoFromEditFom(ContactData contact) {
+    editContactById(contact.getId());
+    String fistn = wd.findElement(By.name("firstname")).getAttribute("value");
+    String lastn = wd.findElement(By.name("lastname")).getAttribute("value");
+    String homep = wd.findElement(By.name("home")).getAttribute("value");
+    String mobilep = wd.findElement(By.name("mobile")).getAttribute("value");
+    String workp = wd.findElement(By.name("work")).getAttribute("value");
+    wd.navigate().back();
+    return new ContactData().withId(contact.getId())
+            .withFistn(fistn).withLastn(lastn).withHomep(homep).withMobilep(mobilep).withWorkp(workp);
   }
 }
