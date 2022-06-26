@@ -20,13 +20,13 @@ public class ContactData {
   @Column(name = "firstname")
   private String fistn;
   @XStreamOmitField
-  @Column(name = "middlename")
+  @Transient
   private String middlen;
   @Expose
   @Column(name = "lastname")
   private String lastn;
   @XStreamOmitField
-  @Column(name = "nickname")
+  @Transient
   private String nickn;
   @Expose
   @Column(name = "home")
@@ -180,23 +180,25 @@ public class ContactData {
     this.photo = photo.getPath();
     return this;
   }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(fistn, that.fistn) && Objects.equals(lastn, that.lastn);
+    return id == that.id && Objects.equals(fistn, that.fistn) && Objects.equals(lastn, that.lastn) && Objects.equals(homep, that.homep) && Objects.equals(mobilep, that.mobilep) && Objects.equals(workp, that.workp) && Objects.equals(address, that.address) && Objects.equals(email, that.email) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, fistn, lastn);
+    return Objects.hash(id, fistn, lastn, homep, mobilep, workp, address, email, email2, email3);
   }
 
   @Override
   public String toString() {
     return "ContactData{" +
-            "fistn='" + fistn + '\'' +
+            "id=" + id +
+            ", fistn='" + fistn + '\'' +
             ", lastn='" + lastn + '\'' +
             ", homep='" + homep + '\'' +
             ", mobilep='" + mobilep + '\'' +

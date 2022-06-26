@@ -50,6 +50,9 @@ public class ContactHelper extends HelperBase{
     click(By.linkText("add new"));
   }
 
+  public void returntoHomePage() {
+    click(By.linkText("home"));
+  }
   public void selecteContactById(int id) {
     wd.findElement(By.cssSelector("input[id = '"+id+"']")).click();}
   public void deleteSelectedContact() {
@@ -77,6 +80,7 @@ public class ContactHelper extends HelperBase{
       fillContactForm(contact, true);
       submitContactCreation();
       contactCache = null;
+      returntoHomePage();
   }
 
   public void modify(ContactData contact) {
@@ -84,6 +88,7 @@ public class ContactHelper extends HelperBase{
     fillContactForm(contact, false);
     updateContact();
     contactCache = null;
+    returntoHomePage();
   }
 
   public void delete(ContactData contact) {
@@ -91,6 +96,7 @@ public class ContactHelper extends HelperBase{
     deleteSelectedContact();
     allert();
     contactCache = null;
+    returntoHomePage();
   }
 
   public boolean isThereContact() {
