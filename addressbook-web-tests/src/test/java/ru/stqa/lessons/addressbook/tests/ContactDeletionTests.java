@@ -14,7 +14,7 @@ public class ContactDeletionTests extends TestBase {
   public void ensurePreconditions(){
     if (app.db().contacts().size()==0){
       app.contact().create(new ContactData().withFistn("sdg").withMiddlen("sdg").withLastn("Tesdgst3")
-              .withNickn("Alesdgksey").withGroup("test1"));
+              .withNickn("Alesdgksey"));
     }
   }
   @Test

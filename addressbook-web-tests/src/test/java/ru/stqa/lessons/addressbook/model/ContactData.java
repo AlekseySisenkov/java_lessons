@@ -6,7 +6,9 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("Contact")
 @Entity
@@ -56,12 +58,12 @@ public class ContactData {
   @Transient
   private String allEMail;
   @XStreamOmitField
-  @Transient
-  private String group;
-  @XStreamOmitField
   @Column(name = "photo")
   private String photo;
 
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<>();
   public File getPhoto() { return new File(photo); }
   public String getFistn() {
     return fistn;
@@ -91,9 +93,6 @@ public class ContactData {
   }
 
   public String getAllPhones() { return allPhones; }
-  public String getGroup() {
-    return group;
-  }
   public int getId() {
     return id;
   }
@@ -171,14 +170,13 @@ public class ContactData {
     this.allPhones = allPhones;
     return this;
   }
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
-
   public ContactData withPhoto(File photo) {
     this.photo = photo.getPath();
     return this;
+  }
+
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   @Override
@@ -208,5 +206,10 @@ public class ContactData {
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
             '}';
+  }
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
   }
 }

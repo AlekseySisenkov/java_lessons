@@ -30,11 +30,14 @@ public class ContactHelper extends HelperBase{
    // attach(By.name("photo"),contactData.getPhoto());
 
     if(creation) {
-      if(contactData.getGroup() == null)
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
-          else new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    }
-    else {
+      if(contactData.getGroups().size() > 0){
+    // if(contactData.getGroups() == null)
+     //   new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+      //    else{
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+     }
+    } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
@@ -43,7 +46,7 @@ public class ContactHelper extends HelperBase{
      wd.findElement(By.name("new")).click();
      wd.findElement(By.name("group_name")).click();
      wd.findElement(By.name("group_name")).clear();
-     wd.findElement(By.name("group_name")).sendKeys(contactData.getGroup());
+     wd.findElement(By.name("group_name")).sendKeys(contactData.getGroups().iterator().next().getName());
      wd.findElement(By.name("submit")).click();
    }
   public void addnewContact() {
@@ -71,8 +74,8 @@ public class ContactHelper extends HelperBase{
   }
   public void create(ContactData contact) {
     addnewContact();
-    if (contact.getGroup() != null) {
-      if (!isElementPresent(By.id(contact.getGroup()))) {
+    if (contact.getGroups().size() > 0) {
+      if (!isElementPresent(By.id(String.valueOf(contact.getGroups().iterator().next().getId())))) {
         createGroupForContact(contact);
         addnewContact();
       }
