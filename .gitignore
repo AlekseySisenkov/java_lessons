@@ -45,3 +45,4 @@ addressbook-web-tests/out/test/resources/local.properties
 addressbook-web-tests/out/test/resources/testng-contacts.xml
 addressbook-web-tests/out/test/resources/testng-groups.xml
 addressbook-web-tests/out/test/resources/lockback.xml
+addressbook-web-tests/out/test/resources/hibernate.cfg.xml
