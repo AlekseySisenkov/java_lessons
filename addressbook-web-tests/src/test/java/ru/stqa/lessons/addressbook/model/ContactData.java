@@ -65,6 +65,9 @@ public class ContactData {
   @Column(name = "photo")
   private String photo;
 
+  @XStreamOmitField
+  @Transient
+  private String secondaryPhone;
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
   private Set<GroupData> groups = new HashSet<>();
@@ -188,6 +191,15 @@ public class ContactData {
 
   public ContactData withIdGroup(int idGroup) {
     this.idGroup = idGroup;
+    return this;
+  }
+
+  public String getSecondaryPhone() {
+    return secondaryPhone;
+  }
+
+  public ContactData withSecondaryPhone(String secondaryPhone) {
+    this.secondaryPhone = secondaryPhone;
     return this;
   }
 
