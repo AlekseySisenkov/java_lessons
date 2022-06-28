@@ -18,6 +18,10 @@ public class ContactData {
   @Id
   @Column(name = "id")
   private int id = Integer.MAX_VALUE;
+
+  @XStreamOmitField
+  @Transient
+  private int idGroup = Integer.MAX_VALUE;
   @Expose
   @Column(name = "firstname")
   private String fistn;
@@ -106,7 +110,6 @@ public class ContactData {
   public String getEmail3() { return email3; }
 
   public String getAllEMail() { return allEMail; }
-
   public ContactData withEmail(String email) {
     this.email = email;
     return this;
@@ -177,6 +180,15 @@ public class ContactData {
 
   public Groups getGroups() {
     return new Groups(groups);
+  }
+
+  public int getIdGroup() {
+    return idGroup;
+  }
+
+  public ContactData withIdGroup(int idGroup) {
+    this.idGroup = idGroup;
+    return this;
   }
 
   @Override

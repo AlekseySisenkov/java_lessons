@@ -41,6 +41,7 @@
         <!-- List of XML mapping files -->
         <mapping class="ru.stqa.lessons.addressbook.model.GroupData"/>
         <mapping class="ru.stqa.lessons.addressbook.model.ContactData"/>
+        <mapping class="ru.stqa.lessons.addressbook.model.ContactsInGroupData"/>
 
     </session-factory>
 </hibernate-configuration>

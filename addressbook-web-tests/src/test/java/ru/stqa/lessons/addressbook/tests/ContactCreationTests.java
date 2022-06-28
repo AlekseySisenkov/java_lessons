@@ -3,10 +3,12 @@ package ru.stqa.lessons.addressbook.tests;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import org.openqa.selenium.json.TypeToken;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.lessons.addressbook.model.ContactData;
 import ru.stqa.lessons.addressbook.model.Contacts;
+import ru.stqa.lessons.addressbook.model.GroupData;
 import ru.stqa.lessons.addressbook.model.Groups;
 
 import java.io.BufferedReader;
@@ -53,12 +55,20 @@ public class ContactCreationTests extends TestBase{
       return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
-  @Test (dataProvider = "validСontactsFromJson")
-  public void testContactCreation(ContactData contact) throws Exception {
+
+  @BeforeMethod
+  public void ensurePreconditions(){
+    if (app.db().groups().size()==0) {
+      app.goTo().groupPage();
+      app.group().create(new GroupData().withName("atest2"));
+    }
+  }
+  @Test //(dataProvider = "validСontactsFromJson")
+  public void testContactCreation(/*ContactData contact*/) throws Exception {
     Groups groups = app.db().groups();
     Contacts before = app.db().contacts();
     File photo = new File("src/test/resources/Moscow.png");
-    contact = new ContactData().withFistn("test1").withLastn("sdg")
+    ContactData contact = new ContactData().withFistn("test1").withLastn("sdg")
             .withAddress("hjasvfjghfd").withHomep("87685").withMobilep("870975875").withWorkp("789754")
             .withEmail("76985").withEmail2("9868579").withEmail3("hgjgf").withPhoto(photo).inGroup(groups.iterator().next());
     app.contact().create(contact);

@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase{
     type(By.name("email"), contactData.getEmail());
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
-   // attach(By.name("photo"),contactData.getPhoto());
+    attach(By.name("photo"),contactData.getPhoto());
 
     if(creation) {
       if(contactData.getGroups().size() > 0){
@@ -41,14 +41,16 @@ public class ContactHelper extends HelperBase{
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
   }
-   public void createGroupForContact(ContactData contactData){
+ /*  public void createGroupForContact(ContactData contactData){
      wd.findElement(By.linkText("groups")).click();
      wd.findElement(By.name("new")).click();
      wd.findElement(By.name("group_name")).click();
      wd.findElement(By.name("group_name")).clear();
      wd.findElement(By.name("group_name")).sendKeys(contactData.getGroups().iterator().next().getName());
      wd.findElement(By.name("submit")).click();
-   }
+   }*/
+
+
   public void addnewContact() {
     click(By.linkText("add new"));
   }
@@ -69,17 +71,21 @@ public class ContactHelper extends HelperBase{
     //wd.get("http://localhost/addressbook/edit.php?id="+id);
     wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s'",id))).click();
   }
+
+ /* public void goToGroupPageForContact(int id) {
+      click(By.linkText("group page"));
+  }*/
   public void updateContact() {
     click(By.xpath("//div[@id='content']/form/input[22]"));
   }
-  public void create(ContactData contact) {
+  public void  create(ContactData contact) {
     addnewContact();
-    if (contact.getGroups().size() > 0) {
+    /*if (contact.getGroups().size() > 0) {
       if (!isElementPresent(By.id(String.valueOf(contact.getGroups().iterator().next().getId())))) {
         createGroupForContact(contact);
         addnewContact();
       }
-    }
+    }*/
       fillContactForm(contact, true);
       submitContactCreation();
       contactCache = null;
@@ -102,6 +108,18 @@ public class ContactHelper extends HelperBase{
     returntoHomePage();
   }
 
+
+  public void removeContactFromGroup(ContactData contact) {
+
+      new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(contact.getIdGroup()));
+    selecteContactById(contact.getId());
+    wd.findElement(By.name("remove")).click();
+  }
+  public void addInGroup(ContactData contact) {
+      selecteContactById(contact.getId());
+      new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(contact.getIdGroup()));
+    wd.findElement(By.name("add")).click();
+  }
   public boolean isThereContact() {
     return isElementPresent(By.name("selected[]"));
   }
