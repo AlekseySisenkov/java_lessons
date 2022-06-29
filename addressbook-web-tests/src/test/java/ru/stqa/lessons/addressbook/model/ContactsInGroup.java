@@ -10,6 +10,9 @@ public class ContactsInGroup extends ForwardingSet<ContactsInGroupData> {
 
   private Set<ContactsInGroupData> delegate;
 
+  public ContactsInGroup() {
+    this.delegate = new HashSet<>();
+  }
   public ContactsInGroup(Collection<ContactsInGroupData> contactsInGroup) {
     this.delegate = new HashSet<>(contactsInGroup);
   }

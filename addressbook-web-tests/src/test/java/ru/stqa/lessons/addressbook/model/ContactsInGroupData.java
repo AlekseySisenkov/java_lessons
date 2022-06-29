@@ -15,11 +15,10 @@ public class ContactsInGroupData {
 
   @Id
   @Column(name = "id")
-  private int contact/* = Integer.MAX_VALUE*/;
-
+  private int contact = Integer.MAX_VALUE;
   @Id
   @Column(name = "group_id")
-  private int group/* = Integer.MAX_VALUE*/;
+  private int group = Integer.MAX_VALUE;
 
   public int getContact() {
     return contact;

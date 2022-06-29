@@ -27,9 +27,10 @@ public class ContactHelper extends HelperBase{
     type(By.name("email"), contactData.getEmail());
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
-    attach(By.name("photo"),contactData.getPhoto());
+
 
     if(creation) {
+      attach(By.name("photo"),contactData.getPhoto());
       if(contactData.getGroups().size() > 0){
     // if(contactData.getGroups() == null)
      //   new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
@@ -80,12 +81,6 @@ public class ContactHelper extends HelperBase{
   }
   public void  create(ContactData contact) {
     addnewContact();
-    /*if (contact.getGroups().size() > 0) {
-      if (!isElementPresent(By.id(String.valueOf(contact.getGroups().iterator().next().getId())))) {
-        createGroupForContact(contact);
-        addnewContact();
-      }
-    }*/
       fillContactForm(contact, true);
       submitContactCreation();
       contactCache = null;
