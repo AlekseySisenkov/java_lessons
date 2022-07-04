@@ -5,12 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import ru.stqa.lessons.addressbook.model.ContactData;
-import ru.stqa.lessons.addressbook.model.Contacts;
+import ru.stqa.lessons.addressbook.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactHelper extends HelperBase{
+  private ContactsInGroupData contactInGroup;
+
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
@@ -103,7 +105,41 @@ public class ContactHelper extends HelperBase{
     returntoHomePage();
   }
 
+  public ContactsInGroupData selectContactForAddInGroup (Groups groups, Contacts contacts, ContactsInGroup before){
+    ArrayList<GroupData> listOfGroups = new ArrayList<>(groups);
+    int elementCountOfGroups = listOfGroups.size();
+    ArrayList<ContactData> listOfContacts = new ArrayList<>(contacts);
+    int elementCountOfContacts = listOfContacts.size();
+    ArrayList<ContactsInGroupData> listOfBefore = new ArrayList<>(before);
+    int elementCountOfBefore = listOfBefore.size();
 
+
+    if(elementCountOfBefore != 0){
+      ContactsInGroupData beforeForGroup = listOfBefore.get(0);
+      ContactsInGroupData beforeForContact = listOfBefore.get(0);
+      ContactData addedContact = listOfContacts.get(0);
+      GroupData addedInGroup = listOfGroups.get(0);
+      outer:
+      for(int i = 0; i < elementCountOfContacts; i++){
+        for (int k = 0; k < elementCountOfBefore; k++) {
+          if (addedContact.getId() == beforeForContact.getContact()) {
+            for(int l = 0; l < elementCountOfGroups; l++){
+              for (int j = 0; j < elementCountOfBefore; j++) {
+                if (addedInGroup.getId() == beforeForGroup.getGroup()) {
+                  beforeForGroup = listOfBefore.get(j);
+                }else {
+                  break outer;
+                }
+              }
+              addedInGroup = listOfGroups.get(l);
+            }
+          }  else beforeForContact = listOfBefore.get(k);
+        }
+        addedContact = listOfContacts.get(i);
+      }
+      return new ContactsInGroupData().withContact(addedContact.getId()).withGroup(addedInGroup.getId());
+    }else return new ContactsInGroupData().withContact(contacts.iterator().next().getId()).withGroup(groups.iterator().next().getId());
+  }
   public void removeContactFromGroup(ContactData contact) {
 
       new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(contact.getIdGroup()));
