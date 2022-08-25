@@ -10,15 +10,17 @@ import ru.stqa.lessons.addressbook.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
   private ContactsInGroupData contactInGroup;
 
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
+
   public void submitContactCreation() {
     click(By.xpath("//input[21]"));
   }
+
   public void fillContactForm(ContactData contactData, boolean creation) {
     type(By.name("firstname"), contactData.getFistn());
     type(By.name("lastname"), contactData.getLastn());
@@ -31,15 +33,15 @@ public class ContactHelper extends HelperBase{
     type(By.name("email3"), contactData.getEmail3());
 
 
-    if(creation) {
-      attach(By.name("photo"),contactData.getPhoto());
-      if(contactData.getGroups().size() > 0){
-    // if(contactData.getGroups() == null)
-     //   new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
-      //    else{
+    if (creation) {
+      attach(By.name("photo"), contactData.getPhoto());
+      if (contactData.getGroups().size() > 0) {
+        // if(contactData.getGroups() == null)
+        //   new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+        //    else{
         Assert.assertTrue(contactData.getGroups().size() == 1);
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
-     }
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -61,8 +63,11 @@ public class ContactHelper extends HelperBase{
   public void returntoHomePage() {
     click(By.linkText("home"));
   }
+
   public void selecteContactById(int id) {
-    wd.findElement(By.cssSelector("input[id = '"+id+"']")).click();}
+    wd.findElement(By.cssSelector("input[id = '" + id + "']")).click();
+  }
+
   public void deleteSelectedContact() {
     click(By.xpath("//input[@value='Delete']"));
   }
@@ -70,23 +75,25 @@ public class ContactHelper extends HelperBase{
   public void allert() {
     wd.switchTo().alert().accept();
   }
+
   public void editContactById(int id) {
     //wd.get("http://localhost/addressbook/edit.php?id="+id);
-    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s'",id))).click();
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s'", id))).click();
   }
 
- /* public void goToGroupPageForContact(int id) {
-      click(By.linkText("group page"));
-  }*/
+  /* public void goToGroupPageForContact(int id) {
+       click(By.linkText("group page"));
+   }*/
   public void updateContact() {
     click(By.xpath("//div[@id='content']/form/input[22]"));
   }
-  public void  create(ContactData contact) {
+
+  public void create(ContactData contact) {
     addnewContact();
-      fillContactForm(contact, true);
-      submitContactCreation();
-      contactCache = null;
-      returntoHomePage();
+    fillContactForm(contact, true);
+    submitContactCreation();
+    contactCache = null;
+    returntoHomePage();
   }
 
   public void modify(ContactData contact) {
@@ -105,7 +112,7 @@ public class ContactHelper extends HelperBase{
     returntoHomePage();
   }
 
-  public ContactsInGroupData selectContactForAddInGroup (Groups groups, Contacts contacts, ContactsInGroup before){
+  public ContactsInGroupData selectContactForAddInGroup(Groups groups, Contacts contacts, ContactsInGroup before) {
     ArrayList<GroupData> listOfGroups = new ArrayList<>(groups);
     int elementCountOfGroups = listOfGroups.size();
     ArrayList<ContactData> listOfContacts = new ArrayList<>(contacts);
@@ -114,31 +121,62 @@ public class ContactHelper extends HelperBase{
     int elementCountOfBefore = listOfBefore.size();
 
 
-    if(elementCountOfBefore != 0){
-      ContactsInGroupData beforeForGroup = listOfBefore.get(0);
-      ContactsInGroupData beforeForContact = listOfBefore.get(0);
+    if (elementCountOfBefore != 0) {
+      ContactsInGroupData contactsInGroup /*beforeForGroup/* = listOfBefore.get(0)*/;
+      //ContactsInGroupData beforeForContact/* = listOfBefore.get(0)*/;
       ContactData addedContact = listOfContacts.get(0);
       GroupData addedInGroup = listOfGroups.get(0);
       outer:
-      for(int i = 0; i < elementCountOfContacts; i++){
+      /*for (int i = 0; i < elementCountOfContacts; i++) {
+        addedContact = listOfContacts.get(i);
         for (int k = 0; k < elementCountOfBefore; k++) {
+          beforeForContact = listOfBefore.get(k);
           if (addedContact.getId() == beforeForContact.getContact()) {
-            for(int l = 0; l < elementCountOfGroups; l++){
+            for (int l = 0; l < elementCountOfGroups; l++) {
+              addedInGroup = listOfGroups.get(l);
               for (int j = 0; j < elementCountOfBefore; j++) {
-                if (addedInGroup.getId() == beforeForGroup.getGroup()) {
-                  beforeForGroup = listOfBefore.get(j);
-                }else {
+                beforeForGroup = listOfBefore.get(j);
+                if (addedInGroup.getId() != beforeForGroup.getGroup()) {
+                  // beforeForGroup = listOfBefore.get(j);
+                  /*}else {
                   break outer;
                 }
               }
-              addedInGroup = listOfGroups.get(l);
+              //addedInGroup = listOfGroups.get(l);
             }
-          }  else beforeForContact = listOfBefore.get(k);
+          }  //else beforeForContact = listOfBefore.get(k);
         }
+        //addedContact = listOfContacts.get(i);
+      }*/
+
+      for (int i = 0; i < elementCountOfContacts; i++){
         addedContact = listOfContacts.get(i);
+        for (int k = 0; k < elementCountOfBefore; k++) {
+          contactsInGroup = listOfBefore.get(k);
+          if (addedContact.getId() == contactsInGroup.getContact()) {
+            for (int l = 0; l < elementCountOfGroups; l++) {
+              addedInGroup = listOfGroups.get(l);
+              if (contactsInGroup.getGroup() != addedInGroup.getId()) {
+                  break outer;
+                }
+            }
+          }
+        }
       }
+        //if()
       return new ContactsInGroupData().withContact(addedContact.getId()).withGroup(addedInGroup.getId());
-    }else return new ContactsInGroupData().withContact(contacts.iterator().next().getId()).withGroup(groups.iterator().next().getId());
+    } else {
+      return new ContactsInGroupData().withContact(contacts.iterator().next().getId()).withGroup(groups.iterator().next().getId());
+    }
+  }
+
+  public void createGroupForContact(GroupData group){
+    if(isElementPresent(By.tagName("h1")) && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("new"))){
+      return;
+    }
+    click(By.linkText("groups"));
+
   }
   public void removeContactFromGroup(ContactData contact) {
 
