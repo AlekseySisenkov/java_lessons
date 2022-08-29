@@ -22,6 +22,7 @@ public class ContactData {
   @XStreamOmitField
   @Transient
   private int idGroup = Integer.MAX_VALUE;
+
   @Expose
   @Column(name = "firstname")
   private String fistn;

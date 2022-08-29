@@ -120,88 +120,115 @@ public class ContactHelper extends HelperBase {
     ArrayList<ContactsInGroupData> listOfBefore = new ArrayList<>(before);
     int elementCountOfBefore = listOfBefore.size();
 
-
     if (elementCountOfBefore != 0) {
-      ContactsInGroupData contactsInGroup /*beforeForGroup/* = listOfBefore.get(0)*/;
-      //ContactsInGroupData beforeForContact/* = listOfBefore.get(0)*/;
-      ContactData addedContact = listOfContacts.get(0);
-      GroupData addedInGroup = listOfGroups.get(0);
-      outer:
-      /*for (int i = 0; i < elementCountOfContacts; i++) {
-        addedContact = listOfContacts.get(i);
-        for (int k = 0; k < elementCountOfBefore; k++) {
-          beforeForContact = listOfBefore.get(k);
-          if (addedContact.getId() == beforeForContact.getContact()) {
-            for (int l = 0; l < elementCountOfGroups; l++) {
-              addedInGroup = listOfGroups.get(l);
-              for (int j = 0; j < elementCountOfBefore; j++) {
-                beforeForGroup = listOfBefore.get(j);
-                if (addedInGroup.getId() != beforeForGroup.getGroup()) {
-                  // beforeForGroup = listOfBefore.get(j);
-                  /*}else {
-                  break outer;
-                }
-              }
-              //addedInGroup = listOfGroups.get(l);
-            }
-          }  //else beforeForContact = listOfBefore.get(k);
-        }
-        //addedContact = listOfContacts.get(i);
-      }*/
+      ContactsInGroupData contactsInGroup;
+      ContactData addedContact = null;
+      GroupData addedInGroup = null;
+      boolean createGroup = false;
+      boolean conInGroup = false;
+      boolean groupForContact = false;
 
-      for (int i = 0; i < elementCountOfContacts; i++){
+      for (int i = 0; i < elementCountOfContacts; i++) {
         addedContact = listOfContacts.get(i);
+        conInGroup = false;
+
         for (int k = 0; k < elementCountOfBefore; k++) {
           contactsInGroup = listOfBefore.get(k);
           if (addedContact.getId() == contactsInGroup.getContact()) {
-            for (int l = 0; l < elementCountOfGroups; l++) {
-              addedInGroup = listOfGroups.get(l);
-              if (contactsInGroup.getGroup() != addedInGroup.getId()) {
-                  break outer;
-                }
-            }
+            conInGroup = true;
+            break;
           }
         }
+        if (!conInGroup) break;
       }
-        //if()
-      return new ContactsInGroupData().withContact(addedContact.getId()).withGroup(addedInGroup.getId());
-    } else {
+
+      if (conInGroup) {
+        for (int l = 0; l < elementCountOfGroups; l++) {
+          addedInGroup = listOfGroups.get(l);
+          groupForContact = false;
+
+          for (int j = 0; j < elementCountOfBefore; j++) {
+            contactsInGroup = listOfBefore.get(j);
+            if (addedInGroup.getId() == contactsInGroup.getGroup()) {
+              groupForContact = true;
+              break;
+            }
+          }
+          if (!groupForContact) break;
+        }
+
+        if (groupForContact) {
+          outer:
+          for (int m = 0; m < elementCountOfContacts; m++) {
+            addedContact = listOfContacts.get(m);
+            for (int n = 0; n < elementCountOfGroups; n++) {
+              addedInGroup = listOfGroups.get(n);
+              createGroup = false;
+              for (int p = 0; p < elementCountOfBefore; p++) {
+                contactsInGroup = listOfBefore.get(p);
+                if ((addedContact.getId() == contactsInGroup.getContact()) && (addedInGroup.getId() == contactsInGroup.getGroup())) {
+                  createGroup = true;
+                  break;
+                }
+              }
+              if (!createGroup) break outer;
+            }
+          }
+
+          if (createGroup) {
+            addedInGroup = new GroupData().withName("Group" + elementCountOfGroups);
+            createGroupForContact(addedInGroup);
+            return new ContactsInGroupData().withContact(contacts.iterator().next().getId())
+                    .withGroup(Integer.parseInt(wd.findElement(By.xpath("//input[@title='Select (" + addedInGroup.getName() + ")']"))
+                            .getAttribute("value")));
+          } else
+            return new ContactsInGroupData().withContact(addedContact.getId()).withGroup(addedInGroup.getId());
+        } else
+          return new ContactsInGroupData().withContact(contacts.iterator().next().getId()).withGroup(addedInGroup.getId());
+      } else
+        return new ContactsInGroupData().withContact(addedContact.getId()).withGroup(groups.iterator().next().getId());
+    } else
       return new ContactsInGroupData().withContact(contacts.iterator().next().getId()).withGroup(groups.iterator().next().getId());
-    }
   }
 
-  public void createGroupForContact(GroupData group){
-    if(isElementPresent(By.tagName("h1")) && wd.findElement(By.tagName("h1")).getText().equals("Groups")
-            && isElementPresent(By.name("new"))){
-      return;
-    }
+  public void createGroupForContact(GroupData group) {
     click(By.linkText("groups"));
-
+    click(By.name("new"));
+    type(By.name("group_name"), group.getName());
+    click(By.name("submit"));
+    click(By.linkText("groups"));
   }
+
   public void removeContactFromGroup(ContactData contact) {
 
-      new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(contact.getIdGroup()));
+    new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(contact.getIdGroup()));
     selecteContactById(contact.getId());
     wd.findElement(By.name("remove")).click();
   }
+
   public void addInGroup(ContactData contact) {
-      selecteContactById(contact.getId());
-      new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(contact.getIdGroup()));
+    selecteContactById(contact.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(contact.getIdGroup()));
     wd.findElement(By.name("add")).click();
   }
+
   public boolean isThereContact() {
     return isElementPresent(By.name("selected[]"));
   }
-  public int count() { return wd.findElements(By.name("selected[]")).size(); }
+
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 
   private Contacts contactCache = null;
+
   public Contacts all() {
-    if(contactCache != null){
+    if (contactCache != null) {
       return new Contacts(contactCache);
     }
     contactCache = new Contacts();
     List<WebElement> elements = wd.findElements(By.cssSelector("tr[name ='entry']"));
-    for(WebElement element: elements){
+    for (WebElement element : elements) {
       String fistn = element.findElement(By.cssSelector("#maintable td:nth-child(3)")).getText();
       String lastn = element.findElement(By.cssSelector("#maintable td:nth-child(2)")).getText();
       String allPhones = element.findElement(By.cssSelector("#maintable td:nth-child(6)")).getText();
