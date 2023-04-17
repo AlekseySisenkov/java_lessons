@@ -25,26 +25,16 @@ public class HttpSession {
   }
 
   public boolean login(String username, String password) throws IOException {
-    HttpPost post1 = new HttpPost (app.getProperty("web.baseUrl") + "/login_page.php");
-    List<NameValuePair> params1 = new ArrayList<>();
-    params1.add(new BasicNameValuePair ("username",username));
-   // params.add(new BasicNameValuePair ("password",password));
-    params1.add(new BasicNameValuePair ("secure_session","on"));
-    params1.add(new BasicNameValuePair ("return","index.php"));
-    post1.setEntity(new UrlEncodedFormEntity(params1));
-    CloseableHttpResponse response1 = httpclient.execute(post1);
-    String body1 = geTextForm(response1);
-    HttpPost post2 = new HttpPost (app.getProperty("web.baseUrl") + "/login_password_page.php");
+    HttpPost post = new HttpPost (app.getProperty("web.baseUrl") + "/login.php");
     List<NameValuePair> params = new ArrayList<>();
-    //params.add(new BasicNameValuePair ("username",username));
+    params.add(new BasicNameValuePair ("username",username));
     params.add(new BasicNameValuePair ("password",password));
     params.add(new BasicNameValuePair ("secure_session","on"));
-    params.add(new BasicNameValuePair ("return","index.php"));
-    post2.setEntity(new UrlEncodedFormEntity(params));
-    CloseableHttpResponse response2 = httpclient.execute(post2);
-    String body2 = geTextForm(response2);
-
-    return body1.contains(String.format("<span class=\"italic\">%s</span>", username));
+    params.add(new BasicNameValuePair ("return","account_page.php"));
+    post.setEntity(new UrlEncodedFormEntity(params));
+    CloseableHttpResponse response = httpclient.execute(post);
+    String body = geTextForm(response);
+    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
   }
 
   private String geTextForm(CloseableHttpResponse response) throws IOException {
@@ -56,9 +46,10 @@ public class HttpSession {
   }
 
   public boolean isLoggedInAs(String username) throws IOException {
-    HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/login.php");
+    HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "account_page.php");
     CloseableHttpResponse response = httpclient.execute(get);
     String body = geTextForm(response);
-    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+   // return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
   }
 }
