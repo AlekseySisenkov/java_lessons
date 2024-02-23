@@ -20,4 +20,24 @@ public class TriangleTests {
     Triangle t2 = new Triangle(14.0, 14.0, 3.0);
     Assertions.assertEquals(t2.square(), 354.15533315199417);
   }
+
+  @Test
+  public void testSideNegative(){
+    try {
+      Triangle t3 = new Triangle(-5.0, 4.0, 7.0);
+      Assertions.fail();
+    } catch (IllegalArgumentException exception){
+
+    }
+  }
+
+  @Test
+  public void testInequalityViolated(){
+    try {
+      Triangle t4 = new Triangle(2.0, 4.0, 7.0);
+      Assertions.fail();
+    } catch (IllegalArgumentException exception){
+
+    }
+  }
 }
