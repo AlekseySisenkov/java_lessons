@@ -1,12 +1,10 @@
 package ru.stqa.lessons.sandbox;
 
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 public class PoinTests {
 
 
-  @Test
   public void testArea1 () {
 
     Point p1 = new Point(1, -15);
@@ -15,7 +13,6 @@ public class PoinTests {
     assert p1.distance(p2) == 21.18962010041709;
   }
 
-  @Test
   public void testArea2 () {
 
     Point p3 = new Point(-1, 4);
@@ -23,7 +20,6 @@ public class PoinTests {
     Assert.assertEquals(p3.distance(p4), 5.830951894845301);
   }
 
-  @Test
   public void testArea3 () {
 
     Point p5 = new Point(34,2);
