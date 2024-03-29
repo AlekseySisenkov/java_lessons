@@ -1,6 +1,7 @@
 package ru.stqa.lessons.addressbook.tests;
 
 import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
 import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -26,16 +27,16 @@ public class ContactCreationTests extends TestBase{
   @DataProvider
   public Iterator<Object[]> validСontactsFromXml() throws IOException {
     try(BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.xml")))){
-      String xml = "";
+      StringBuilder xml = new StringBuilder();
       String line = reader.readLine();
       while (line != null){
-        xml += line;
+        xml.append(line);
         line = reader.readLine();
       }
       XStream xstream = new XStream();
       xstream.allowTypes(new Class[]{ContactData.class});
       xstream.processAnnotations(ContactData.class);
-      List<ContactData> groups = (List<ContactData>) xstream.fromXML(xml);
+      List<ContactData> groups = (List<ContactData>) xstream.fromXML(xml.toString());
       return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
@@ -43,14 +44,14 @@ public class ContactCreationTests extends TestBase{
   @DataProvider
   public Iterator<Object[]> validСontactsFromJson() throws IOException {
     try(BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))){
-      String json = "";
+      StringBuilder json = new StringBuilder();
       String line = reader.readLine();
       while (line != null){
-        json += line;
+        json.append(line);
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<ContactData> contacts = gson.fromJson(json,new TypeToken<List<ContactData>>(){}.getType());
+      List<ContactData> contacts = gson.fromJson(json.toString(),new TypeToken<List<ContactData>>(){}.getType());
       return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
@@ -68,13 +69,13 @@ public class ContactCreationTests extends TestBase{
     Contacts before = app.db().contacts();
     File photo = new File("src/test/resources/Moscow.png");
     ContactData contact = new ContactData().withFistn("test1").withLastn("sdg")
-            .withAddress("hjasvfjghfd").withHomep("87685").withMobilep("870975875").withWorkp("789754")
+            .withAddress("Address_test").withHomep("87685").withMobilep("870975875").withWorkp("789754")
             .withEmail("76985").withEmail2("9868579").withEmail3("hgjgf").withPhoto(photo).inGroup(groups.iterator().next());
     app.contact().create(contact);
     assertThat(app.contact().count(),equalTo(before.size()+1));
     Contacts after = app.db().contacts();
 
     assertThat(after, equalTo(
-            before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+            before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
   }
 }

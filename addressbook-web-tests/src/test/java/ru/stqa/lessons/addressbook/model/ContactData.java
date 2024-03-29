@@ -71,7 +71,7 @@ public class ContactData {
   private String secondaryPhone;
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
-  private Set<GroupData> groups = new HashSet<>();
+  private final Set<GroupData> groups = new HashSet<>();
   public File getPhoto() { return new File(photo); }
   public String getFistn() {
     return fistn;
@@ -209,12 +209,17 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id && idGroup == that.idGroup && Objects.equals(fistn, that.fistn) && Objects.equals(middlen, that.middlen) && Objects.equals(lastn, that.lastn) && Objects.equals(nickn, that.nickn) && Objects.equals(homep, that.homep) && Objects.equals(mobilep, that.mobilep) && Objects.equals(workp, that.workp) && Objects.equals(allPhones, that.allPhones) && Objects.equals(address, that.address) && Objects.equals(email, that.email) && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3) && Objects.equals(allEMail, that.allEMail) && Objects.equals(photo, that.photo) && Objects.equals(secondaryPhone, that.secondaryPhone) && Objects.equals(groups, that.groups);
+    return id == that.id && idGroup == that.idGroup && Objects.equals(fistn, that.fistn)
+            && Objects.equals(lastn, that.lastn) && Objects.equals(homep, that.homep)
+            && Objects.equals(mobilep, that.mobilep) && Objects.equals(workp, that.workp)
+            && Objects.equals(address, that.address) && Objects.equals(email, that.email)
+            && Objects.equals(email2, that.email2) && Objects.equals(email3, that.email3)
+            && Objects.equals(groups, that.groups);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, idGroup, fistn, middlen, lastn, nickn, homep, mobilep, workp, allPhones, address, email, email2, email3, allEMail, photo, secondaryPhone, groups);
+    return Objects.hash(id, idGroup, fistn, lastn, homep, mobilep, workp, address, email, email2, email3, groups);
   }
 
   @Override
@@ -223,20 +228,14 @@ public class ContactData {
             "id=" + id +
             ", idGroup=" + idGroup +
             ", fistn='" + fistn + '\'' +
-            ", middlen='" + middlen + '\'' +
             ", lastn='" + lastn + '\'' +
-            ", nickn='" + nickn + '\'' +
             ", homep='" + homep + '\'' +
             ", mobilep='" + mobilep + '\'' +
             ", workp='" + workp + '\'' +
-            ", allPhones='" + allPhones + '\'' +
             ", address='" + address + '\'' +
             ", email='" + email + '\'' +
             ", email2='" + email2 + '\'' +
             ", email3='" + email3 + '\'' +
-            ", allEMail='" + allEMail + '\'' +
-            ", photo='" + photo + '\'' +
-            ", secondaryPhone='" + secondaryPhone + '\'' +
             ", groups=" + groups +
             '}';
   }
