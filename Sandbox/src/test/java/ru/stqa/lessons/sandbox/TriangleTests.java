@@ -44,7 +44,7 @@ public class TriangleTests {
   @Test
   public void testTriangle(){
     Triangle t1 = new Triangle(10.0, 4.0, 7.0);
-    Triangle t2 = new Triangle(4.0, 7.0, 10.0);
+    Triangle t2 = new Triangle(7.0, 4.0, 10.0);
     Assertions.assertEquals(t1, t2);
   }
 }

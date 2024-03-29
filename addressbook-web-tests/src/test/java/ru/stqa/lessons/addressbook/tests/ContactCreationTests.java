@@ -1,7 +1,6 @@
 package ru.stqa.lessons.addressbook.tests;
 
 import com.google.gson.Gson;
-import com.thoughtworks.xstream.XStream;
 import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
