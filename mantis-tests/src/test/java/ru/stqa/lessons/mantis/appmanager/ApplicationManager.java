@@ -1,52 +1,57 @@
 package ru.stqa.lessons.mantis.appmanager;
 
-import org.openqa.selenium.JavascriptExecutor;
+
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.BrowserType;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
-  private final Properties properties;
-  private JavascriptExecutor js;
-  WebDriver wd;
-  private String browser;
+  private String string;
+  private Properties properties;
+  private WebDriver wd;
 
-  public ApplicationManager(String browser) {
+  private SessionHelper sessionHelper;
+  private HttpSessionHelper httpSessionHelper;
 
-    this.browser = browser;
-    properties = new Properties();
+  public void init(String browser, Properties properties) {
+    this.string = browser;
+    this.properties = properties;
   }
 
-  public void init() throws IOException {
-    String target = System.getProperty("target","local");
-    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties",target))));
-
-    if (browser.equals(BrowserType.CHROME)){
-      wd = new ChromeDriver();
-    } else if (browser.equals(BrowserType.FIREFOX)){
-      wd = new FirefoxDriver();
+  public WebDriver driver(){
+    if (wd == null){
+      if ("chrome".equals(string)){
+        wd = new ChromeDriver();
+      } else if ("firefox".equals(string)) {
+        wd = new FirefoxDriver();
+      } else {
+        throw new IllegalArgumentException(String.format("Unknown browser %s", string));
+      }
+      Runtime.getRuntime().addShutdownHook(new Thread(wd::quit));
+      wd.get(properties.getProperty("web.baseUrl"));
+      wd.manage().window().setSize(new Dimension(1076, 640));
     }
-   wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    js = (JavascriptExecutor) wd;
-    wd.get(properties.getProperty("web.baseUrl"));
+    return wd;
   }
 
-  public void stop() {
-    wd.quit();
+  public SessionHelper session() {
+    if (sessionHelper == null) {
+      sessionHelper = new SessionHelper(this);
+    }
+    return sessionHelper;
   }
 
-  public HttpSession newSession(){
-    return new HttpSession(this);
+  public HttpSessionHelper http() {
+    if (httpSessionHelper == null) {
+      httpSessionHelper = new HttpSessionHelper(this);
+    }
+    return httpSessionHelper;
   }
 
-  public String getProperty(String key){
-   return properties.getProperty(key);
+  public String property(String name) {
+    return properties.getProperty(name);
   }
 }

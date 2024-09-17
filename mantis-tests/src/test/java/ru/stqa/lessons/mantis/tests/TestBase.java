@@ -1,21 +1,22 @@
 package ru.stqa.lessons.mantis.tests;
 
-import org.openqa.selenium.remote.BrowserType;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.junit.jupiter.api.BeforeEach;
 import ru.stqa.lessons.mantis.appmanager.ApplicationManager;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 public class TestBase {
-  protected static final ApplicationManager app
-          = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
+  protected static ApplicationManager app;
 
-  @BeforeSuite(alwaysRun = true)
-  public void setUp() throws Exception {
-    app.init();
-  }
-
-  @AfterSuite(alwaysRun = true)
-  public void tearDown() throws Exception {
-    app.stop();
+  @BeforeEach
+  public void setUp() throws IOException {
+    if (app == null) {
+      var properties = new Properties();
+      properties.load(new FileReader(System.getProperty("target", "local.properties")));
+      app = new ApplicationManager();
+      app.init(System.getProperty("browser", "chrome"), properties);
+    }
   }
 }

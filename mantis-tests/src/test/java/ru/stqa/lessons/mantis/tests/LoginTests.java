@@ -1,18 +1,13 @@
 package ru.stqa.lessons.mantis.tests;
 
-import org.testng.annotations.Test;
-import ru.stqa.lessons.mantis.appmanager.HttpSession;
-
-import java.io.IOException;
-
-import static org.testng.Assert.assertTrue;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class LoginTests extends TestBase{
 
   @Test
-  public void testLogin() throws IOException {
-    HttpSession session = app.newSession();
-    assertTrue(session.login("administrator","root"));
-    assertTrue(session.isLoggedInAs("administrator"));
+  void canLogin() {
+    app.http().login("administrator", "root");
+    Assertions.assertTrue(app.http().isLoggedIn());
   }
 }

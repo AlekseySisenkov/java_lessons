@@ -11,8 +11,7 @@ repositories {
 dependencies {
 
     implementation platform ('org.junit:junit-bom:5.9.1')
-    implementation 'org.junit.jupiter:junit.jupiter'
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.11.0'
     implementation 'org.testng:testng:7.5'
 
 }
